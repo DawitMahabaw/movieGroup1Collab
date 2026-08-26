@@ -1,0 +1,9 @@
+.banner {
+    color: white;
+    object-fit: contain;
+    background-image: url("../../assets/image/banner.jpeg");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+}
