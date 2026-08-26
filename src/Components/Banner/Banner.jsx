@@ -6,6 +6,7 @@ import { movieInstance } from "../../Utility/MovieInstance";
 import requests from "../../Utility/MovieRequestingUrl";
 
 const BANNER_BASE = "https://image.tmdb.org/t/p/original/";
+
 function Banner() {
   const [bannerImage, setBannerImage] = useState({});
   useEffect(() => {
