@@ -55,3 +55,14 @@
     padding-bottom: 0.5rem;
     background-color: white;
 }
+
+.fadeBottom{
+    height: 11rem;
+    background-image: linear-gradient(
+        180deg,
+        transparent,
+        rgb(37, 37, 37, 0.61),
+        #111
+    );
+    width: 100%;
+}
