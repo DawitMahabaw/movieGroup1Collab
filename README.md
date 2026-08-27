@@ -108,39 +108,6 @@ movieGroup1Collab/
 |-- vite.config.js
 ```
 
-## Team Roles
-
-### Main Group Leader
-
-Ahmed Dawud
-
-### Sub-group B Leader and Repository Owner
-
-Dawit Mahabaw
-
-## Task Assignments
-
-### Sub-group A
-
-| Member | Assigned Tasks | Responsibility |
-| --- | --- | --- |
-| Ahmed Dawud | T-01, T-06 | Project scaffolding and router/layout |
-| Eliyas Wakjira | T-07, T-13 | Header and Swiper carousel |
-| Ananya Wubshiet | T-10 | Banner API fetching |
-| Natnial Tilahun | T-11, T-14 | Banner UI and movie card |
-| Yohannes Abegaz | T-09, T-15 | Footer and responsive design |
-
-### Sub-group B
-
-| Member | Assigned Tasks | Responsibility |
-| --- | --- | --- |
-| Dawit Mahabaw | T-03, T-04 | TMDB API setup and Axios utilities |
-| Surafel Jiberuk | T-05 | Global CSS/theme |
-| Mayet Mengist | T-08, T-12 | Header interactions and category fetching |
-| Zelalem Mengistu | T-02, T-16 | Assets and CSS Modules consistency audit |
-| Tsega Desalegni | T-16 | Animation and CSS polish |
-
-T-16 is shared. Zelalem should focus on CSS Modules consistency and class naming, while Tsega should focus on animation, transitions, and final CSS polish.
 
 ## Master Task Checklist
 
