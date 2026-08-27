@@ -3,8 +3,29 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo.png"; 
 
 function Header() {
+  const [isHeaderBlack, setIsHeaderBlack] = useState(false);
+
+
+
+
+
+  // Black background toggle on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsHeaderBlack(true);
+      } else {
+        setIsHeaderBlack(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="header-container">
+    <header
+      className={`header-container ${isHeaderBlack ? "header-solid-black" : ""}`}
+    >
       {/* LeftSide: LOGO and Nav-links */}
       <div className="header-left">
         <Link to="/">
