@@ -1,0 +1,194 @@
+/* Direct Header Background: Top irratti transparent akka ta'u */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 68px;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  background-color: transparent; /* Top irratti background hin qabu */
+  transition: background-color 0.4s ease-in-out; /* Smooth transition */
+  box-sizing: border-box;
+}
+
+/* Scroll godhamee pixel 100 yoo darbu gurraacha ta'a */
+.nav_black {
+  background-color: #000000 !important;
+}
+
+/* Div 1: Logo */
+.header_logo {
+  display: flex;
+  align-items: center;
+  margin-right: 35px;
+}
+
+.logo {
+  width: 92px;
+  height: auto;
+  object-fit: contain;
+  cursor: pointer;
+  display: block;
+}
+
+/* Div 2: Nav Links */
+.header_nav {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.nav_links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 18px;
+}
+
+.nav_links li a {
+  color: #ffffff;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav_links li a:hover {
+  color: #b3b3b3;
+}
+
+/* Div 3: Right Section */
+.header_right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.icon {
+  color: #ffffff;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  stroke-width: 2.2;
+}
+
+/* Search Container */
+.search_container {
+  display: flex;
+  align-items: center;
+}
+
+.search_input {
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 13px;
+  outline: none;
+  width: 200px;
+  margin-left: 8px;
+}
+
+/* Notification Badge */
+.notification_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notification_badge {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 6px;
+  height: 6px;
+  background-color: #e50914;
+  border-radius: 50%;
+}
+
+/* Profile Trigger & Dropdown Menu */
+.profile_container {
+  position: relative;
+}
+
+.profile_trigger {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.avatar_box {
+  width: 32px;
+  height: 32px;
+  background-color: #333333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar_icon {
+  color: #ffffff;
+  width: 20px;
+  height: 20px;
+}
+
+.arrow_icon {
+  color: #ffffff;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.profile_container:hover .arrow_icon {
+  transform: rotate(180deg);
+}
+
+.dropdown_menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 12px;
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 155px;
+  padding: 8px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+  z-index: 1001;
+}
+
+.dropdown_menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown_menu li {
+  padding: 8px 16px;
+}
+
+.dropdown_menu li a,
+.dropdown_menu li {
+  color: #ffffff;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.dropdown_menu li:hover a,
+.dropdown_menu li:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #333333;
+  margin: 6px 0;
+}
