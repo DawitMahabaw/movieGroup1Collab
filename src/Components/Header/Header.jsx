@@ -1,106 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Bell, User, ChevronDown } from 'lucide-react';
-import styles from './Header.module.css';
-import logo from '../../assets/image/logo.png';
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import logo from "../../assets/image/logo.png";
+import { Search, User, ChevronDown, Bell } from "lucide-react";
+import styles from "./Header.module.css";
 
-const Header = () => {
-  const [show, setShow] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+function Header() {
+  const [isHeaderBlack, setIsHeaderBlack] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const searchRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  // Black background toggle on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setShow(true);
+      if (window.scrollY > 50) {
+        setIsHeaderBlack(true);
       } else {
-        setShow(false);
+        setIsHeaderBlack(false);
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Closes search and dropdown automatically when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
     };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
   return (
-    <header className={`${styles.header} ${show ? styles.nav_black : ''}`}>
-      
-      {/* DIV 1: LOGO */}
-      <div className={styles.header_logo}>
+    <header
+      className={`${styles["header-container"]} ${isHeaderBlack ? styles["header-solid-black"] : ""}`}
+    >
+      {/* LeftSide: LOGO and Nav-links */}
+      <div className={styles["header-left"]}>
         <Link to="/">
           <img
-            className={styles.logo}
+            className={styles["header-logo"]}
             src={logo}
             alt="Netflix Logo"
           />
         </Link>
+        <nav className={styles["header-nav-links"]}>
+          <Link to="/" className={styles["nav-link"]}>
+            Home
+          </Link>
+          <Link to="/tv-shows" className={styles["nav-link"]}>
+            TV Shows
+          </Link>
+          <Link to="/movies" className={styles["nav-link"]}>
+            Movies
+          </Link>
+          <Link to="/latest" className={styles["nav-link"]}>
+            New & Popular
+          </Link>
+          <Link to="/my-list" className={styles["nav-link"]}>
+            My List
+          </Link>
+          <Link to="/browse-languages" className={styles["nav-link"]}>
+            Browse by Language
+          </Link>
+        </nav>
       </div>
 
-      {/* DIV 2: NAV LINKS */}
-      <div className={styles.header_nav}>
-        <ul className={styles.nav_links}>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/tv-shows">TV Shows</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
-          <li><Link to="/latest">New & Popular</Link></li>
-          <li><Link to="/my-list">My List</Link></li>
-          <li><Link to="/languages">Browse by Language</Link></li>
-        </ul>
-      </div>
-
-      {/* DIV 3: RIGHT SECTION */}
-      <div className={styles.header_right}>
-        {/* Search Container */}
-        <div className={styles.search_container}>
-          <Search 
-            className={styles.icon} 
-            onClick={() => setSearchOpen(!searchOpen)} 
-          />
-          {searchOpen && (
-            <input
-              type="text"
-              placeholder="Search"
-              className={styles.search_input}
-              autoFocus
-            />
-          )}
-        </div>
-
-        {/* Notification Container */}
-        <div className={styles.notification_container}>
-          <Bell className={styles.icon} />
-          <span className={styles.notification_badge}></span>
-        </div>
-
-        {/* Profile & Dropdown Container */}
-        <div 
-          className={styles.profile_container}
-          onMouseEnter={() => setDropdownOpen(true)}
-          onMouseLeave={() => setDropdownOpen(false)}
+      {/* RightSide: Search bar, Bell, Avatar drop down */}
+      <div className={styles["header-right"]}>
+        {/* Item 1: Expanding Search */}
+        <div
+          ref={searchRef}
+          className={`${styles["search-bar-wrapper"]} ${isSearchOpen ? styles.open : ""}`}
         >
-          <div className={styles.profile_trigger}>
-            <div className={styles.avatar_box}>
-              <User className={styles.avatar_icon} />
-            </div>
-            <ChevronDown className={styles.arrow_icon} />
+          <Search
+            className={styles["header-icon"]}
+            size={20}
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+          />
+          <input
+            type="text"
+            className={styles["search-input"]}
+            placeholder="Titles, genres..."
+          />
+        </div>
+
+        {/* Item 2: Notification Bell */}
+        <Bell className={styles["header-icon"]} size={20} />
+
+        {/* Item 3 & 4: Profile Avatar and Chevron */}
+        <div ref={dropdownRef} className={styles["header-profile-container"]}>
+          <div
+            className={styles["header-profile-box"]}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            <User size={20} />
+            <ChevronDown
+              className={`${styles["header-chevron"]} ${isDropdownOpen ? styles.flipped : ""}`}
+              size={16}
+            />
           </div>
 
-          {dropdownOpen && (
-            <div className={styles.dropdown_menu}>
-              <ul>
-                <li><Link to="/account">Account</Link></li>
-                <li><Link to="/help">Help Center</Link></li>
-                <hr className={styles.divider} />
-                <li>Sign out</li>
-              </ul>
+          {isDropdownOpen && (
+            <div className={styles["profile-dropdown-menu"]}>
+              <div className={styles["dropdown-item"]}>Manage Profiles</div>
+              <div className={styles["dropdown-item"]}>Account Info</div>
+              <div
+                className={`${styles["dropdown-item"]} ${styles["border-top"]}`}
+              >
+                Sign Out of Netflix
+              </div>
             </div>
           )}
         </div>
       </div>
-
     </header>
   );
-};
-
+}
 export default Header;
