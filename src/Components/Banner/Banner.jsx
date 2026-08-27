@@ -3,7 +3,7 @@ import netflixBannerLog from "../../assets/image/logo.png";
 import { Play, Info } from "lucide-react";
 import styles from './Banner.module.css'
 import movieInstance from '../../Utility/MovieInstance';
-import requests from "../../Utility/requestURLs";
+import requests from "../../Utility/RequestUrl";
 
 const BANNER_BASE = "https://image.tmdb.org/t/p/original/"
 
