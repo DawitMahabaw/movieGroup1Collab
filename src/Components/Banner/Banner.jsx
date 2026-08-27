@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Banner() {
-  // Task T-10: Connected and working on Banner API Fetching
+  // T-10: State management to hold movie data
+  const [movie, setMovie] = useState(null);
 
   return (
     <header className="banner">
