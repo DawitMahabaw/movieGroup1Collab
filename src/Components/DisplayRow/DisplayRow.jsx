@@ -3,7 +3,7 @@ import styles from "./DisplayRow.module.css";
 import SlideShow from "../SlideShow/SlideShow";
 import { movies } from "../../Data/Data";
 import MovieInstance from "../../Utility/MovieInstance";
-import requests from "../../Utility/requestURLs";
+import requests from "../../Utility/RequestURLs";
 import movieInstance from "../../Utility/MovieInstance";
 
 function DisplayRow() {
