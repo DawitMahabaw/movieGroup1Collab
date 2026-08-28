@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo.png"; 
+import { Search } from "lucide-react"; 
 
 function Header() {
   const [isHeaderBlack, setIsHeaderBlack] = useState(false);
+   const [isSearchOpen, setIsSearchOpen] = useState(false);
+   const searchRef = useRef(null);
 
 
 
@@ -52,8 +55,20 @@ function Header() {
           </Link>
         </nav>
       </div>
-      {/* RightSide Core Container Shell */}
-      <div className="header-right"></div>
+
+       {/* RightSide: Search bar, Bell, Avatar drop down */}
+      <div className="header-right">
+        {/* Item 1: Expanding Search */}
+        <div
+          ref={searchRef}
+          className={`search-bar-wrapper ${isSearchOpen ? "open" : ""}`} >
+          <Search className="header-icon" size={20} onClick={() => setIsSearchOpen(!isSearchOpen)}/>
+          <input type="text"className="search-input" placeholder="Titles, genres..."/>
+        </div>
+         </div>
+
+
+     
     </header>
   );
 }
