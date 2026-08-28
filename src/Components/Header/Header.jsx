@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo.png"; 
-import { Search } from "lucide-react"; 
+import { Search, User, ChevronDown, Bell } from "lucide-react"; 
 
 function Header() {
   const [isHeaderBlack, setIsHeaderBlack] = useState(false);
    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
    const searchRef = useRef(null);
-
-
-
+ const dropdownRef = useRef(null);
 
 
   // Black background toggle on scroll
@@ -56,19 +56,52 @@ function Header() {
         </nav>
       </div>
 
-       {/* RightSide: Search bar, Bell, Avatar drop down */}
+      {/* RightSide: Search bar, Bell, Avatar drop down */}
       <div className="header-right">
         {/* Item 1: Expanding Search */}
         <div
           ref={searchRef}
-          className={`search-bar-wrapper ${isSearchOpen ? "open" : ""}`} >
-          <Search className="header-icon" size={20} onClick={() => setIsSearchOpen(!isSearchOpen)}/>
-          <input type="text"className="search-input" placeholder="Titles, genres..."/>
+          className={`search-bar-wrapper ${isSearchOpen ? "open" : ""}`}
+        >
+          <Search
+            className="header-icon"
+            size={20}
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+          />
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Titles, genres..."
+          />
         </div>
-         </div>
 
+        {/* Item 2: Notification Bell */}
+        <Bell className="header-icon" size={20} />
 
-     
+        {/* Item 3 & 4: Profile Avatar and Chevron */}
+        <div ref={dropdownRef} className="header-profile-container">
+          <div
+            className="header-profile-box"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            <User size={20} />
+            <ChevronDown
+              className={`header-chevron ${isDropdownOpen ? "flipped" : ""}`}
+              size={16}
+            />
+          </div>
+
+          {isDropdownOpen && (
+            <div className="profile-dropdown-menu">
+              <div className="dropdown-item">Manage Profiles</div>
+              <div className="dropdown-item">Account Info</div>
+              <div className="dropdown-item border-top">
+                Sign Out of Netflix
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </header>
   );
 }
