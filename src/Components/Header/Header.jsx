@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/image/logo.png"; 
-import { Search, User, ChevronDown, Bell } from "lucide-react"; 
+import logo from "../../assets/image/logo.png";
+import { Search, User, ChevronDown, Bell } from "lucide-react";
+import styles from "./Header.module.css";
 
 function Header() {
   const [isHeaderBlack, setIsHeaderBlack] = useState(false);
@@ -24,7 +25,6 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
   // Closes search and dropdown automatically when clicking outside
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -38,79 +38,84 @@ function Header() {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
-  
 
   return (
     <header
-      className={`header-container ${isHeaderBlack ? "header-solid-black" : ""}`}
+      className={`${styles["header-container"]} ${isHeaderBlack ? styles["header-solid-black"] : ""}`}
     >
       {/* LeftSide: LOGO and Nav-links */}
-      <div className="header-left">
+      <div className={styles["header-left"]}>
         <Link to="/">
-          <img className="header-logo" src={logo} alt="Netflix Logo" />
+          <img
+            className={styles["header-logo"]}
+            src={logo}
+            alt="Netflix Logo"
+          />
         </Link>
-        <nav className="header-nav-links">
-          <Link to="/" className="nav-link">
+        <nav className={styles["header-nav-links"]}>
+          <Link to="/" className={styles["nav-link"]}>
             Home
           </Link>
-          <Link to="/tv-shows" className="nav-link">
+          <Link to="/tv-shows" className={styles["nav-link"]}>
             TV Shows
           </Link>
-          <Link to="/movies" className="nav-link">
+          <Link to="/movies" className={styles["nav-link"]}>
             Movies
           </Link>
-          <Link to="/latest" className="nav-link">
+          <Link to="/latest" className={styles["nav-link"]}>
             New & Popular
           </Link>
-          <Link to="/my-list" className="nav-link">
+          <Link to="/my-list" className={styles["nav-link"]}>
             My List
           </Link>
-          <Link to="/browse-languages" className="nav-link">
+          <Link to="/browse-languages" className={styles["nav-link"]}>
             Browse by Language
           </Link>
         </nav>
       </div>
 
       {/* RightSide: Search bar, Bell, Avatar drop down */}
-      <div className="header-right">
+      <div className={styles["header-right"]}>
         {/* Item 1: Expanding Search */}
         <div
           ref={searchRef}
-          className={`search-bar-wrapper ${isSearchOpen ? "open" : ""}`}
+          className={`${styles["search-bar-wrapper"]} ${isSearchOpen ? styles.open : ""}`}
         >
           <Search
-            className="header-icon"
+            className={styles["header-icon"]}
             size={20}
             onClick={() => setIsSearchOpen(!isSearchOpen)}
           />
           <input
             type="text"
-            className="search-input"
+            className={styles["search-input"]}
             placeholder="Titles, genres..."
           />
         </div>
 
         {/* Item 2: Notification Bell */}
-        <Bell className="header-icon" size={20} />
+        <Bell className={styles["header-icon"]} size={20} />
 
         {/* Item 3 & 4: Profile Avatar and Chevron */}
-        <div ref={dropdownRef} className="header-profile-container">
+        <div ref={dropdownRef} className={styles["header-profile-container"]}>
           <div
-            className="header-profile-box"
+            className={styles["header-profile-box"]}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             <User size={20} />
             <ChevronDown
-              className={`header-chevron ${isDropdownOpen ? "flipped" : ""}`}
+              className={`${styles["header-chevron"]} ${isDropdownOpen ? styles.flipped : ""}`}
               size={16}
             />
           </div>
 
           {isDropdownOpen && (
-            <div className="profile-dropdown-menu">
-              <div className="dropdown-item">Manage Profiles</div>
-              <div className="dropdown-item">Account Info</div>
-              <div className="dropdown-item border-top">
+            <div className={styles["profile-dropdown-menu"]}>
+              <div className={styles["dropdown-item"]}>Manage Profiles</div>
+              <div className={styles["dropdown-item"]}>Account Info</div>
+              <div
+                className={`${styles["dropdown-item"]} ${styles["border-top"]}`}
+              >
                 Sign Out of Netflix
               </div>
             </div>
