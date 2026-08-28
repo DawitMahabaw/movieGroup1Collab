@@ -5,12 +5,11 @@ import { Search, User, ChevronDown, Bell } from "lucide-react";
 
 function Header() {
   const [isHeaderBlack, setIsHeaderBlack] = useState(false);
-   const [isSearchOpen, setIsSearchOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-   const searchRef = useRef(null);
- const dropdownRef = useRef(null);
-
+  const searchRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   // Black background toggle on scroll
   useEffect(() => {
@@ -24,6 +23,22 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+
+  // Closes search and dropdown automatically when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+  
 
   return (
     <header
