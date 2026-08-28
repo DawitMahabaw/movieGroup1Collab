@@ -1,128 +1,127 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/image/logo.png";
-import { Search, User, ChevronDown, Bell } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Search, Bell, User, ChevronDown } from "lucide-react";
 import styles from "./Header.module.css";
 
 function Header() {
-  const [isHeaderBlack, setIsHeaderBlack] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isProfileOn, setIsProfileOn] = useState(false);
 
-  const searchRef = useRef(null);
-  const dropdownRef = useRef(null);
+  //   for blur
+  // window.addEventListener() is a side effect.
+  // useEffect sets up a scroll listener when the component appears, updates state based on scroll position, and removes the listener when the component disappears.
+  // window.scrollY = how many pixels the page has been scrolled vertically.
 
-  // Black background toggle on scroll
+  const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        setIsHeaderBlack(true);
+        setIsScrolled(true);
       } else {
-        setIsHeaderBlack(false);
+        setIsScrolled(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
+    // the cleanup code using return
+    // When the component is removed from the page(UI), React removes the scroll listener so it doesn't keep listening unnecessarily.
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Closes search and dropdown automatically when clicking outside
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setIsSearchOpen(false);
-      }
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
-
   return (
-    <header
-      className={`${styles["header-container"]} ${isHeaderBlack ? styles["header-solid-black"] : ""}`}
-    >
-      {/* LeftSide: LOGO and Nav-links */}
-      <div className={styles["header-left"]}>
-        <Link to="/">
-          <img
-            className={styles["header-logo"]}
-            src={logo}
-            alt="Netflix Logo"
-          />
-        </Link>
-        <nav className={styles["header-nav-links"]}>
-          <Link to="/" className={styles["nav-link"]}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+      <div className={styles.container}>
+        {/* Logo */}
+        <img className={styles.logo} src={logo} alt="" />
+
+        {/* navigation links */}
+        <nav className={styles.nav}>
+          <Link className={styles.navLink} to="">
             Home
           </Link>
-          <Link to="/tv-shows" className={styles["nav-link"]}>
-            TV Shows
+          <Link className={styles.navLink} to="">
+            Tv Shows
           </Link>
-          <Link to="/movies" className={styles["nav-link"]}>
+          <Link className={styles.navLink} to="">
             Movies
           </Link>
-          <Link to="/latest" className={styles["nav-link"]}>
+          <Link className={styles.navLink} to="">
             New & Popular
           </Link>
-          <Link to="/my-list" className={styles["nav-link"]}>
+          <Link className={styles.navLink} to="">
             My List
           </Link>
-          <Link to="/browse-languages" className={styles["nav-link"]}>
+          <Link className={styles.navLink} to="">
             Browse by Language
           </Link>
         </nav>
-      </div>
 
-      {/* RightSide: Search bar, Bell, Avatar drop down */}
-      <div className={styles["header-right"]}>
-        {/* Item 1: Expanding Search */}
-        <div
-          ref={searchRef}
-          className={`${styles["search-bar-wrapper"]} ${isSearchOpen ? styles.open : ""}`}
-        >
-          <Search
-            className={styles["header-icon"]}
-            size={20}
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-          />
-          <input
-            type="text"
-            className={styles["search-input"]}
-            placeholder="Titles, genres..."
-          />
-        </div>
+        {/* right side section */}
+        <div className={styles.rightSection}>
+          {/* search */}
+          <div className={styles.searchContainer}>
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className={styles.searchButton}
+            >
+              <Search size={20} />
+            </button>
 
-        {/* Item 2: Notification Bell */}
-        <Bell className={styles["header-icon"]} size={20} />
+            {/* this is conditional rendering using the && operator.
+                it is like this 
+                    if (isSearchOpen) {
+                    return <input ... />;
+                    } 
+               && in JSX is basically a short way to say "render this only when this condition is true."
+               condition && something
+               If condition is true, JavaScript evaluates/returns something.
+               If condition is false, it stops there.
+          */}
 
-        {/* Item 3 & 4: Profile Avatar and Chevron */}
-        <div ref={dropdownRef} className={styles["header-profile-container"]}>
-          <div
-            className={styles["header-profile-box"]}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <User size={20} />
-            <ChevronDown
-              className={`${styles["header-chevron"]} ${isDropdownOpen ? styles.flipped : ""}`}
-              size={16}
-            />
+            {isSearchOpen && (
+              <input
+                type="text"
+                placeholder="movie title"
+                className={styles.searchInput}
+              />
+            )}
           </div>
 
-          {isDropdownOpen && (
-            <div className={styles["profile-dropdown-menu"]}>
-              <div className={styles["dropdown-item"]}>Manage Profiles</div>
-              <div className={styles["dropdown-item"]}>Account Info</div>
-              <div
-                className={`${styles["dropdown-item"]} ${styles["border-top"]}`}
-              >
-                Sign Out of Netflix
+          {/* notification */}
+          <button className={styles.iconButton}>
+            {/* notification icon */}
+            <Bell size={20} />
+            <span className={styles.notificationBadge}>5</span>
+          </button>
+
+          {/* profile */}
+          <div className={styles.profileContainer}>
+            <button
+              onClick={() => setIsProfileOn(!isProfileOn)}
+              className={styles.profileButton}
+            >
+              {/* user icon */}
+              <div className={styles.profileAvatar}>
+                <User size={20} />
               </div>
-            </div>
-          )}
+              <ChevronDown size={20} />
+
+              {/* dropdown icon */}
+            </button>
+            {isProfileOn && (
+              <div className={styles.profileMenu}>
+                <Link className={styles.profileMenuItem}>Account</Link>
+                <Link className={styles.profileMenuItem}>Help Center</Link>
+                <hr className={styles.profileMenuDivider} />
+                <button className={styles.profileMenuItem}>Sign Out</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
   );
 }
+
 export default Header;
